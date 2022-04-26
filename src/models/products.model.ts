@@ -2,11 +2,10 @@ import DBclient from "../database";
 
 export type product=
 {
-    id:string,
+    id?:string,
     pname:string,
     price:number,
-    pdescription:string,
-    order_id:string
+    pdescription:string
 
 }
 export class products
@@ -37,9 +36,9 @@ export class products
              //Open connection with database
              const conn=DBclient.connect()
              //select data from database
-             const sql = `INSERT INTO products (pname,price,pdescription,orderid) Values($1,$2,$3,$4) Returning
-             id,pname,price,pdescription,orderid`
-             const result = (await conn).query(sql,[p.id,p.order_id,p.pdescription,p.pname,p.price]);
+             const sql = `INSERT INTO products (pname,price,pdescription) Values($1,$2,$3) Returning
+             pname,price,pdescription,id`
+             const result = (await conn).query(sql,[p.pname,p.price,p.pdescription]);
              //close the connection
              (await conn).release
              //return the result
@@ -80,8 +79,9 @@ export class products
              //Open connection with database
              const conn=DBclient.connect()
              //select data from database
-             const sql = `update products set pname=$1,pdescription=$2,price=$3,orderid=$4 where id=($5)`
-             const result = (await conn).query(sql,[p.pname,p.pdescription,p.price,p.order_id,p.id]);
+             const sql = `UPDATE products set pname=$1,price=$2,pdescription=$3 where id=($4) Returning 
+             id,pname,price,pdescription`
+             const result = (await conn).query(sql,[p.pname,p.price,p.pdescription,p.id]);
              //close the connection
              (await conn).release
              //return the result
@@ -100,7 +100,7 @@ export class products
              //Open connection with database
              const conn=DBclient.connect()
              //select data from database
-             const sql = `select * from users where id=($1)`
+             const sql = `Delete from products where id=($1)`
              const result = (await conn).query(sql,[id]);
              //close the connection
              (await conn).release

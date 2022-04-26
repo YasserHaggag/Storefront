@@ -10,3 +10,4 @@ CREATE TABLE users (
     payment_method_id int REFERENCES payment_methods(id) Not Null,
     password VARCHAR(255) Not Null
 );
+
