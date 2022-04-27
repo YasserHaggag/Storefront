@@ -4,5 +4,5 @@ CREATE TABLE orders_products (
      product_id int REFERENCES products(id),
     order_id int REFERENCES orders(id),
    
-    quantity integer NOT NULL
+    quantity decimal NOT NULL
 );

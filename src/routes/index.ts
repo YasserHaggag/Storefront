@@ -1,4 +1,6 @@
 import { Router } from "express";
+import orderRoutes from "./orders.routes";
+import order_products_Routes from "./orders_products.routes";
 import productRoutes from "./products.routes";
 import userRoutes from "./user.routes";
 
@@ -7,6 +9,9 @@ const routes=Router();
 routes.use('/user',userRoutes)
 //routes.use('/products',)
 routes.use('/product',productRoutes)
+
+routes.use('/order',orderRoutes)
+routes.use('/order_products',order_products_Routes)
 
 
 
