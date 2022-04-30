@@ -129,4 +129,37 @@ export class users
         
     }
 
+    async authentication(email:string,password:string):Promise<user|null>
+    {
+        try {
+            const connection=await DBclient.connect();
+            const sql='select password from users where email=$1'
+            const result= await connection.query(sql,[email]);
+            console.log(result.rows.length)
+            if(result.rows.length)
+            {
+                console.log(password)
+                const {password: hash}=result.rows[0];
+                console.log(hash)
+                const isPasswordValid=bcrypt.compareSync(`${password}${config.pepper}`,hash);
+                console.log(isPasswordValid)
+                if(isPasswordValid)
+                {
+                    const userInfo= await connection.query('select id,name,telephone,address,email,payment_method_id from users where email=($1)',[email]);
+                    console.log(userInfo.rows[0])
+                    return userInfo.rows[0]
+                    
+                }
+            }
+            connection.release();
+            return null;
+            
+        } catch (error) {
+            throw new Error("");
+            
+            
+
+        }
+    }
+
 }

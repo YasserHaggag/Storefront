@@ -1,6 +1,6 @@
 
 import { Router } from "express";
-import { allusers,create,getuser ,deleteUser,updateUser} from "../controllers/user.controllers";
+import { allusers,create,getuser ,deleteUser,updateUser, authenticate} from "../controllers/user.controllers";
 
 const userRoutes=Router();
 
@@ -9,6 +9,7 @@ userRoutes.get('/:id', getuser)
 userRoutes.post('/', create)
 userRoutes.delete('/:id',deleteUser)
 userRoutes.put('/',updateUser)
+userRoutes.post('/authenticate',authenticate)
 
 /* userRoutes.post('/', (req: Request, res: Response) => {
     const article: users = {

@@ -1,5 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { users } from "../models/users.model";
+import config from '../config'
+import jwt from 'jsonwebtoken'
 
 const userModel = new users();
 
@@ -84,6 +86,35 @@ export const deleteUser = async (req: Request, res: Response, next: NextFunction
 
     }
 
+}
+
+export const authenticate =async(req:Request,res:Response,next:NextFunction)=>
+{
+    try {
+        const {email,password}=req.body;
+        console.log(req.body)
+        const user=await userModel.authentication(email,password);
+        console.log(user)
+        const token=jwt.sign({user},config.tokensecret as unknown as string);
+        
+        if (!user)
+        {
+            return res.status(401).json({
+                status:'error',
+                message:'Please check the User name and password and Try again'
+            })
+        }
+        return res.json({
+            status:'success',
+            data:{user,token},
+            message:'user has been authenticated'
+        })
+        
+    } catch (error) {
+        return next(error)
+        
+        
+    }
 }
 
 

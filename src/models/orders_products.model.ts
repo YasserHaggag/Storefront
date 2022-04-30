@@ -100,7 +100,7 @@ export class orders_products
              //Open connection with database
              const conn=DBclient.connect()
              //select data from database
-             const sql = `Delete from orders_products where id=($1)`
+             const sql = `Delete from orders_products where order_id=($1)`
              const result = (await conn).query(sql,[id]);
              //close the connection
              (await conn).release

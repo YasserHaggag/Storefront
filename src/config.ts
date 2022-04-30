@@ -10,6 +10,7 @@ const {
     P_password,
     BCRYPT_PASSWORD,
     SALT_ROUNDS,
+    TOKEN_SECRET,
     
 
 } = process.env
@@ -24,5 +25,6 @@ export default
     password:P_password,
     pepper:BCRYPT_PASSWORD,
     salt:SALT_ROUNDS,
+    tokensecret:TOKEN_SECRET,
 
 }
