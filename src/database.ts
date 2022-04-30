@@ -1,32 +1,30 @@
 import {Pool} from 'pg';
-import dotenv from 'dotenv';
+import config from '../src/config'
 
-dotenv.config()
-const {
-    P_host,
-    P_Database,
-    P_port,
-    P_Username,
-    P_password,
 
-} = process.env
+
 const DBclient= new Pool(
     {
         
-        host:P_host,
-        database:P_Database,
-        port:Number(P_port),//process.env.port,
-        user: P_Username,
+        host:config.host,
+        database:config.database,
+        port:Number(config.port),//process.env.port,
+        user: config.user,
         
         
-        password:P_password,
+        password: config.password,
+
        
         
         
     }
+
+    
     
 )
-console.log(P_password);
+
 console.log(process.env.P_password);
+
+
 
 export default DBclient

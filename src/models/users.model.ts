@@ -1,6 +1,12 @@
 import DBclient from '../database'
+import config from '../config'
+import bcrypt from 'bcrypt'
 
-
+const hash=(password:string)=>
+{
+    const salt=parseInt(config.salt as string,10);
+    return bcrypt.hashSync(`${password}${config.pepper}`,salt)
+}
 
 export type user=
 {
@@ -43,9 +49,10 @@ export class users
              //Open connection with database
              const conn=DBclient.connect()
              //select data from database
-             const sql = `INSERT INTO users (name,telephone,address,email,payment_method_id) Values($1,$2,$3,$4,$5) Returning
+             const sql = `INSERT INTO users (name,telephone,address,email,payment_method_id,password) Values($1,$2,$3,$4,$5,$6) Returning
              id,name,telephone,address,email,payment_method_id`
-             const result = (await conn).query(sql,[u.name,u.telephone,u.address,u.email,u.payment_method_id]);
+           
+             const result = (await conn).query(sql,[u.name,u.telephone,u.address,u.email,u.payment_method_id,hash(u.password)]);
              //close the connection
              (await conn).release
              //return the result
@@ -86,9 +93,9 @@ export class users
              //Open connection with database
              const conn=DBclient.connect()
              //select data from database
-             const sql = `update users set name=$2,telephone=$3,address=$4,email=$5,payment_method_id=$6 where id=($1) Returning
+             const sql = `update users set name=$2,telephone=$3,address=$4,email=$5,payment_method_id=$6,password=$7 where id=($1) Returning
              id,name,telephone,address,email,payment_method_id `
-             const result = (await conn).query(sql,[u.id,u.name,u.telephone,u.address,u.email,u.payment_method_id]);
+             const result = (await conn).query(sql,[u.id,u.name,u.telephone,u.address,u.email,u.payment_method_id,hash(u.password)]);
              //close the connection
              (await conn).release
              //return the result
