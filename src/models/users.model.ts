@@ -1,4 +1,4 @@
-import DBclient from '../database'
+import DBclient  from '../database'
 import config from '../config'
 import bcrypt from 'bcrypt'
 

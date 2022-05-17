@@ -48,11 +48,14 @@ export const allusers = async (req: Request, res: Response, next: NextFunction) 
                 status: 'success',
                 data: { getall }
             })
+          
 
     } catch (error) {
         next(error)
 
     }
+    next();
+    
 
 }
 
@@ -66,9 +69,11 @@ export const getuser = async (req: Request, res: Response, next: NextFunction) =
             })
 
     } catch (error) {
-        next(error)
+        throw new Error("");
+        
 
     }
+    next()
 
 }
 
@@ -82,9 +87,11 @@ export const deleteUser = async (req: Request, res: Response, next: NextFunction
             })
 
     } catch (error) {
-        next(error)
+        throw new Error("");
+        
 
     }
+    next()
 
 }
 
@@ -118,4 +125,4 @@ export const authenticate =async(req:Request,res:Response,next:NextFunction)=>
 }
 
 
-export default {allusers,create,getuser,deleteUser}
+export default {allusers,create,getuser,deleteUser,authenticate}

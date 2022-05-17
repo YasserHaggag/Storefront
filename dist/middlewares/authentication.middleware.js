@@ -39,47 +39,33 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var users_model_1 = require("../models/users.model");
-var server_1 = __importDefault(require("../server"));
-var supertest_1 = __importDefault(require("supertest"));
-var request = (0, supertest_1.default)(server_1.default);
-var users_model = new users_model_1.users();
-describe('Test User Model', function () {
-    it('should have index method', function () {
-        expect(users_model.getall).toBeDefined();
-    });
-    it('index method should return a list of users', function () { return __awaiter(void 0, void 0, void 0, function () {
-        var result;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0: return [4 /*yield*/, users_model.getall()];
-                case 1:
-                    result = _a.sent();
-                    expect(result).toEqual([]);
-                    return [2 /*return*/];
+var jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
+var config_1 = __importDefault(require("../config"));
+var error_middleware_1 = __importDefault(require("./error.middleware"));
+var validateTokenMiddleware = function (req, _res, next) { return __awaiter(void 0, void 0, void 0, function () {
+    var authHeader, bearer, token, decode;
+    return __generator(this, function (_a) {
+        try {
+            authHeader = req.get('Authorization');
+            console.log(authHeader);
+            if (authHeader) {
+                bearer = authHeader.split('')[0].toLowerCase();
+                token = authHeader.split('')[1];
+                if (token && bearer === 'bearer') {
+                    decode = jsonwebtoken_1.default.verify(token, config_1.default.tokensecret);
+                    if (decode) {
+                        next();
+                    }
+                    else {
+                        throw new Error("You are not authorized");
+                    }
+                }
             }
-        });
-    }); });
-    it('index method should return a list of users', function () {
-        expect(users_model.create).toBeDefined();
+        }
+        catch (error) {
+            error_middleware_1.default;
+        }
+        return [2 /*return*/];
     });
-    it('create new user', function () { return __awaiter(void 0, void 0, void 0, function () {
-        var response;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0: return [4 /*yield*/, request.post('/user').send({
-                        "name": "Ali",
-                        "telephone": 1005464562,
-                        "address": "streeeeet 2222",
-                        "email": "yasser@gmail.test",
-                        "payment_method_id": 1,
-                        "password": "Yasser@Admin123"
-                    })];
-                case 1:
-                    response = _a.sent();
-                    expect(response.body.status).toEqual('success');
-                    return [2 /*return*/];
-            }
-        });
-    }); });
-});
+}); };
+exports.default = validateTokenMiddleware;

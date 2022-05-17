@@ -1,4 +1,5 @@
 import { Router } from "express";
+import validateTokenMiddleware from "../middlewares/authentication.middleware";
 import orderRoutes from "./orders.routes";
 import order_products_Routes from "./orders_products.routes";
 import productRoutes from "./products.routes";

@@ -39,18 +39,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.users = void 0;
+exports.orders_products = void 0;
 var database_1 = __importDefault(require("../database"));
-var config_1 = __importDefault(require("../config"));
-var bcrypt_1 = __importDefault(require("bcrypt"));
-var hash = function (password) {
-    var salt = parseInt(config_1.default.salt, 10);
-    return bcrypt_1.default.hashSync("".concat(password).concat(config_1.default.pepper), salt);
-};
-var users = /** @class */ (function () {
-    function users() {
+var orders_products = /** @class */ (function () {
+    function orders_products() {
     }
-    users.prototype.getall = function () {
+    orders_products.prototype.getall = function () {
         return __awaiter(this, void 0, void 0, function () {
             var conn, sql, result, error_1;
             return __generator(this, function (_a) {
@@ -58,7 +52,7 @@ var users = /** @class */ (function () {
                     case 0:
                         _a.trys.push([0, 4, , 5]);
                         conn = database_1.default.connect();
-                        sql = 'select id,name,telephone,address,email,payment_method_id from users';
+                        sql = 'select * from orders_products';
                         return [4 /*yield*/, conn];
                     case 1:
                         result = (_a.sent()).query(sql);
@@ -78,7 +72,7 @@ var users = /** @class */ (function () {
             });
         });
     };
-    users.prototype.create = function (u) {
+    orders_products.prototype.create = function (op) {
         return __awaiter(this, void 0, void 0, function () {
             var conn, sql, result, error_2;
             return __generator(this, function (_a) {
@@ -86,10 +80,10 @@ var users = /** @class */ (function () {
                     case 0:
                         _a.trys.push([0, 4, , 5]);
                         conn = database_1.default.connect();
-                        sql = "INSERT INTO users (name,telephone,address,email,payment_method_id,password) Values($1,$2,$3,$4,$5,$6) Returning\n             id,name,telephone,address,email,payment_method_id";
+                        sql = "INSERT INTO orders (order_id,product_id,quantity) Values($1,$2,$3) Returning\n             order_id,product_id,quantity,id";
                         return [4 /*yield*/, conn];
                     case 1:
-                        result = (_a.sent()).query(sql, [u.name, u.telephone, u.address, u.email, u.payment_method_id, hash(u.password)]);
+                        result = (_a.sent()).query(sql, [op.order_id, op.product_id, op.quantity]);
                         return [4 /*yield*/, conn];
                     case 2:
                         //close the connection
@@ -106,7 +100,7 @@ var users = /** @class */ (function () {
             });
         });
     };
-    users.prototype.getone = function (id) {
+    orders_products.prototype.getone = function (id) {
         return __awaiter(this, void 0, void 0, function () {
             var conn, sql, result, error_3;
             return __generator(this, function (_a) {
@@ -114,7 +108,7 @@ var users = /** @class */ (function () {
                     case 0:
                         _a.trys.push([0, 4, , 5]);
                         conn = database_1.default.connect();
-                        sql = "select id,name,telephone,address,email,payment_method_id from users where id=($1)";
+                        sql = "select * from orders_products where id=($1)";
                         return [4 /*yield*/, conn];
                     case 1:
                         result = (_a.sent()).query(sql, [id]);
@@ -134,7 +128,7 @@ var users = /** @class */ (function () {
             });
         });
     };
-    users.prototype.updateuser = function (u) {
+    orders_products.prototype.updateRecord = function (op) {
         return __awaiter(this, void 0, void 0, function () {
             var conn, sql, result, error_4;
             return __generator(this, function (_a) {
@@ -142,10 +136,10 @@ var users = /** @class */ (function () {
                     case 0:
                         _a.trys.push([0, 4, , 5]);
                         conn = database_1.default.connect();
-                        sql = "update users set name=$2,telephone=$3,address=$4,email=$5,payment_method_id=$6,password=$7 where id=($1) Returning\n             id,name,telephone,address,email,payment_method_id ";
+                        sql = "UPDATE orders_products set order_id=$1,product_id=$2,quantity=$3 where id=($4) Returning \n             id,product_id,order_id,quantity,comments";
                         return [4 /*yield*/, conn];
                     case 1:
-                        result = (_a.sent()).query(sql, [u.id, u.name, u.telephone, u.address, u.email, u.payment_method_id, hash(u.password)]);
+                        result = (_a.sent()).query(sql, [op.order_id, op.product_id, op.quantity]);
                         return [4 /*yield*/, conn];
                     case 2:
                         //close the connection
@@ -162,7 +156,7 @@ var users = /** @class */ (function () {
             });
         });
     };
-    users.prototype.deleteone = function (id) {
+    orders_products.prototype.deleteone = function (id) {
         return __awaiter(this, void 0, void 0, function () {
             var conn, sql, result, error_5;
             return __generator(this, function (_a) {
@@ -170,7 +164,7 @@ var users = /** @class */ (function () {
                     case 0:
                         _a.trys.push([0, 4, , 5]);
                         conn = database_1.default.connect();
-                        sql = "delete from users where id=($1)";
+                        sql = "Delete from orders_products where order_id=($1)";
                         return [4 /*yield*/, conn];
                     case 1:
                         result = (_a.sent()).query(sql, [id]);
@@ -190,44 +184,6 @@ var users = /** @class */ (function () {
             });
         });
     };
-    users.prototype.authentication = function (email, password) {
-        return __awaiter(this, void 0, void 0, function () {
-            var connection, sql, result, hash_1, isPasswordValid, userInfo, error_6;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        _a.trys.push([0, 5, , 6]);
-                        return [4 /*yield*/, database_1.default.connect()];
-                    case 1:
-                        connection = _a.sent();
-                        sql = 'select password from users where email=$1';
-                        return [4 /*yield*/, connection.query(sql, [email])];
-                    case 2:
-                        result = _a.sent();
-                        console.log(result.rows.length);
-                        if (!result.rows.length) return [3 /*break*/, 4];
-                        console.log(password);
-                        hash_1 = result.rows[0].password;
-                        console.log(hash_1);
-                        isPasswordValid = bcrypt_1.default.compareSync("".concat(password).concat(config_1.default.pepper), hash_1);
-                        console.log(isPasswordValid);
-                        if (!isPasswordValid) return [3 /*break*/, 4];
-                        return [4 /*yield*/, connection.query('select id,name,telephone,address,email,payment_method_id from users where email=($1)', [email])];
-                    case 3:
-                        userInfo = _a.sent();
-                        console.log(userInfo.rows[0]);
-                        return [2 /*return*/, userInfo.rows[0]];
-                    case 4:
-                        connection.release();
-                        return [2 /*return*/, null];
-                    case 5:
-                        error_6 = _a.sent();
-                        throw new Error("");
-                    case 6: return [2 /*return*/];
-                }
-            });
-        });
-    };
-    return users;
+    return orders_products;
 }());
-exports.users = users;
+exports.orders_products = orders_products;

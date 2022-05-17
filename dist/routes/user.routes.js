@@ -1,18 +1,14 @@
-
-import { Router } from "express";
-import { allusers,create,getuser ,deleteUser,updateUser, authenticate} from "../controllers/user.controllers";
-import validateTokenMiddleware from "../middlewares/authentication.middleware";
-const userRoutes=Router();
-
-
-userRoutes.route('/').get(allusers)
-userRoutes.get('/:id', getuser)
-userRoutes.post('/', create)
-userRoutes.delete('/:id',deleteUser)
-userRoutes.put('/',updateUser)
-userRoutes.post('/authenticate',authenticate)
-
-
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var express_1 = require("express");
+var user_controllers_1 = require("../controllers/user.controllers");
+var userRoutes = (0, express_1.Router)();
+userRoutes.route('/').get(user_controllers_1.allusers);
+userRoutes.get('/:id', user_controllers_1.getuser);
+userRoutes.post('/', user_controllers_1.create);
+userRoutes.delete('/:id', user_controllers_1.deleteUser);
+userRoutes.put('/', user_controllers_1.updateUser);
+userRoutes.post('/authenticate', user_controllers_1.authenticate);
 /* userRoutes.post('/', (req: Request, res: Response) => {
     const article: users = {
       name: req.body.name,
@@ -25,10 +21,9 @@ userRoutes.post('/authenticate',authenticate)
        res.json(err)
     }
 }) */
-
 /* userRoutes.put('/users/:id', (req: Request, res: Response) => {
  const article: Article = {
-      id: req.params.id, 
+      id: req.params.id,
       title: req.body.title,
       content: req.body.content
     }
@@ -37,9 +32,8 @@ userRoutes.post('/authenticate',authenticate)
     } catch (err) {
        res.status(400)
        res.json(err)
-    } 
+    }
 }) */
-
 /* userRoutes.delete('/articles/:id', (_req: Request, res: Response) => {
     try {
        res.send('this is the DELETE route')
@@ -50,4 +44,4 @@ userRoutes.post('/authenticate',authenticate)
 }
 
 ) */
-export default userRoutes
+exports.default = userRoutes;

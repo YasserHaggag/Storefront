@@ -1,9 +1,11 @@
 import {Pool} from 'pg';
 import config from '../src/config'
 
+let DBclient!:Pool
 
-
-const DBclient= new Pool(
+if(config.ENV==='dev')
+{
+    DBclient= new Pool(
     {
         
         host:config.host,
@@ -22,6 +24,30 @@ const DBclient= new Pool(
     
     
 )
+}
+if(config.ENV==='test')
+{
+     DBclient= new Pool(
+    {
+        
+        host:config.host,
+        database:config.testDB,
+        port:Number(config.port),//process.env.port,
+        user: config.testuser,
+        
+        
+        password: config.password,
+
+       
+        
+        
+    }
+
+    
+    
+)
+}
+
 
 console.log(process.env.P_password);
 
