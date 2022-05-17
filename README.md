@@ -15,22 +15,24 @@ the application structured by the following libraries:
 
 #### Prepare ENV
 
-1. PGHOST=localhost
-3. PGUSER=postgres
-4. PGDATABASE=store_db
-   PGDATABASETEST=store_db_test
-   PGPASSWORD=password123
-   PGPORT=5432
-   BYCRYPT_PASSWORD=UDACITY220322
-   SALT_ROUND=10
-   TOKEN_SECRET=UDACITYtoken220322
+1. port:P_port,
+    host:P_host,
+    user:P_Username,
+    database:P_Database,
+    password:P_password,
+    pepper:BCRYPT_PASSWORD,
+    salt:SALT_ROUNDS,
+    tokensecret:TOKEN_SECRET,
+    testDB: Test_Database,
+    testuser: Test_username,
+    ENV: ENV
 
 #### scripts
 
 - npm run test : Testing Script
 - npm run watch : start project with nodemon
 - DataBase Port :5432
-- Epress Port : 3000
+- Express Port : 3000
 - Project root : [local host link](http://localhost:3000/)
 
 ## Project branches
@@ -40,8 +42,8 @@ the application structured by the following libraries:
 #### Database Setup
 
 - psql -U postgres ( all privileges granted)
-- CREATE DATABASE store_db
-- CREATE DATABASE store_db_test --> testing dataBase
+- CREATE DATABASE storefront
+- CREATE DATABASE storefront_test --> testing dataBase
 - db-migrate up --> to run migrations
 - Env Variables allocated at database.json file
 

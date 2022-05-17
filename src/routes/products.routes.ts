@@ -2,14 +2,15 @@
 import { Router } from "express";
 
 import { allProducts,getProduct,create,deleteProduct,updateProduct } from "../controllers/product.controllers";
+import { authenticate } from "../controllers/user.controllers";
 
 const productRoutes=Router();
 
-productRoutes.get('/', allProducts)
-productRoutes.get('/:id', getProduct)
-productRoutes.post('/', create)
-productRoutes.delete('/:id',deleteProduct)
-productRoutes.put('/',updateProduct)
+productRoutes.get('/', allProducts,authenticate)
+productRoutes.get('/:id', getProduct,authenticate)
+productRoutes.post('/', create,authenticate)
+productRoutes.delete('/:id',deleteProduct,authenticate)
+productRoutes.put('/',updateProduct,authenticate)
 
 /* userRoutes.post('/', (req: Request, res: Response) => {
     const article: users = {
