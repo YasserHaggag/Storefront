@@ -1,4 +1,4 @@
-import { NextFunction, Request } from "express"
+import { NextFunction, Request,Response } from "express"
 import jwt from 'jsonwebtoken'
 import config from '../config'
 import { authenticate } from "../controllers/user.controllers"
