@@ -6,11 +6,11 @@ import { authenticate } from "../controllers/user.controllers";
 
 const productRoutes=Router();
 
-productRoutes.get('/', allProducts,authenticate)
-productRoutes.get('/:id', getProduct,authenticate)
-productRoutes.post('/', create,authenticate)
-productRoutes.delete('/:id',deleteProduct,authenticate)
-productRoutes.put('/',updateProduct,authenticate)
+productRoutes.get('/', allProducts)
+productRoutes.get('/:id', getProduct)
+productRoutes.post('/', create)
+productRoutes.delete('/:id',deleteProduct)
+productRoutes.put('/',updateProduct)
 
 /* userRoutes.post('/', (req: Request, res: Response) => {
     const article: users = {

@@ -6,10 +6,10 @@ const userRoutes=Router();
 
 
 userRoutes.route('/').get(allusers)
-userRoutes.get('/:id', getuser,authenticate)
-userRoutes.post('/', create,authenticate)
-userRoutes.delete('/:id',deleteUser,authenticate)
-userRoutes.put('/',updateUser,authenticate)
+userRoutes.get('/:id', getuser)
+userRoutes.post('/', create)
+userRoutes.delete('/:id',deleteUser)
+userRoutes.put('/',updateUser)
 userRoutes.post('/authenticate',authenticate)
 
 

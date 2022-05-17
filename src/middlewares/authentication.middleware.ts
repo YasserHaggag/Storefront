@@ -6,7 +6,7 @@ import errormid from "./error.middleware"
 
 
 
-const validateTokenMiddleware = async (req: Request, _res: Response, next: NextFunction) => {
+const validateTokenMiddleware = async (req: Request, res: Response, next: NextFunction) => {
     try {
         //get auth header
         const authHeader = req.get('Authorization')
