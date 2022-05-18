@@ -1,8 +1,8 @@
 
 import { Router } from "express";
-
 import { allProducts,getProduct,create,deleteProduct,updateProduct } from "../controllers/product.controllers";
 import { authenticate } from "../controllers/user.controllers";
+import validateTokenMiddleware from "../middlewares/authentication.middleware";
 
 const productRoutes=Router();
 

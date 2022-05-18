@@ -10,10 +10,10 @@ const user=new users()
 const app= express();
 const port=3000;
 
-app.use(validateTokenMiddleware)
+//app.use(validateTokenMiddleware)
 
 
-app.use(express.json());
+app.use(express.json(),validateTokenMiddleware);
 
 app.use('/api',routes)
 

@@ -1,43 +1,49 @@
 import { NextFunction, Request,Response } from "express"
+
+import { STATUS_CODES } from "http"
 import jwt from 'jsonwebtoken'
 import config from '../config'
 import { authenticate } from "../controllers/user.controllers"
 import errormid from "./error.middleware"
+const unAuthorized = (next : NextFunction) => {
+    const error = new Error('Login Error, please enter Correct Authentication to proceed');
+    next(error);
+}
 
 
 
 const validateTokenMiddleware = async (req: Request, res: Response, next: NextFunction) => {
-    try {
-        //get auth header
-        const authHeader = req.get('Authorization')
-        console.log(authHeader)
 
+
+    try {   
+        // get authorization header
+        const authHeader : string | undefined = req.get('Authorization');
+       
+        // check if there is authorization header or not
         if (authHeader) {
-            const bearer = authHeader.split('')[0].toLowerCase();
-            const token = authHeader.split('')[1];
-            if (token && bearer === 'bearer') {
-                const decode = jwt.verify(token, config.tokensecret as unknown as string)
-                if (decode) {
-                    next();
-                } else {
-                    throw new Error("You are not authorized");
+            const token = authHeader.split(' ')[1];
 
-                }
+            if (token) {
+                const decodeToken = jwt.verify(token, config.tokensecret as string);
+                
 
+                if (decodeToken) next();
+
+                // failed to authorize 
+                else unAuthorized(next);
+            } else {
+
+                // no token provided
+                unAuthorized(next);
             }
-
+        } else {
+            // no authorization header
+            unAuthorized(next);
         }
 
-
-
     } catch (error) {
-
-
-
-        errormid
-
+        unAuthorized(next);
     }
-
 
 }
 export default validateTokenMiddleware

@@ -9,7 +9,7 @@ const routes=Router();
 
 routes.use('/user',userRoutes)
 //routes.use('/products',)
-routes.use('/product',productRoutes)
+routes.use('/product',productRoutes,validateTokenMiddleware)
 
 routes.use('/order',orderRoutes)
 routes.use('/order_products',order_products_Routes)

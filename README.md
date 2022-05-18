@@ -33,7 +33,7 @@ the application structured by the following libraries:
 - npm run watch : start project with nodemon
 - DataBase Port :5432
 - Express Port : 3000
-- Project root : [local host link](http://localhost:3000/)
+- Project root : [local host link](http://localhost:3000/api)
 
 ## Project branches
 
