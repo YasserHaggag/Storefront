@@ -4,7 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var pg_1 = require("pg");
-var config_1 = __importDefault(require("../src/config"));
+var config_1 = __importDefault(require("./config"));
 var DBclient;
 if (config_1.default.ENV === 'dev') {
     DBclient = new pg_1.Pool({

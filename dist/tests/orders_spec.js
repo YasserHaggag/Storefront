@@ -39,42 +39,43 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
-var config_1 = __importDefault(require("../config"));
-var unAuthorized = function (next) {
-    var error = new Error('Login Error, please enter Correct Authentication to proceed');
-    next(error);
-};
-var validateTokenMiddleware = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
-    var authHeader, token, decodeToken;
-    return __generator(this, function (_a) {
-        try {
-            authHeader = req.get('Authorization');
-            // check if there is authorization header or not
-            if (authHeader) {
-                token = authHeader.split(' ')[1];
-                if (token) {
-                    decodeToken = jsonwebtoken_1.default.verify(token, config_1.default.tokensecret);
-                    if (decodeToken)
-                        next();
-                    // failed to authorize 
-                    else
-                        unAuthorized(next);
-                }
-                else {
-                    // no token provided
-                    unAuthorized(next);
-                }
-            }
-            else {
-                // no authorization header
-                unAuthorized(next);
-            }
-        }
-        catch (error) {
-            unAuthorized(next);
-        }
-        return [2 /*return*/];
+var orders_model_1 = require("../models/orders.model");
+var server_1 = __importDefault(require("../server"));
+var supertest_1 = __importDefault(require("supertest"));
+var request = (0, supertest_1.default)(server_1.default);
+var orders_model = new orders_model_1.orders();
+describe('Test User Model', function () {
+    it('should have index method', function () {
+        expect(orders_model.getall).toBeDefined();
     });
-}); };
-exports.default = validateTokenMiddleware;
+    it('index method should return a list of orders', function () { return __awaiter(void 0, void 0, void 0, function () {
+        var result;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, orders_model.getall()];
+                case 1:
+                    result = _a.sent();
+                    expect(result).toEqual([]);
+                    return [2 /*return*/];
+            }
+        });
+    }); });
+    it('index method should return a list of orders', function () {
+        expect(orders_model.create).toBeDefined();
+    });
+    it('create new user', function () { return __awaiter(void 0, void 0, void 0, function () {
+        var response;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, request.post('/order').send({
+                        "user_id": 7,
+                        "comments": "User comments in that area"
+                    })];
+                case 1:
+                    response = _a.sent();
+                    expect(response.body.status).toEqual('success');
+                    return [2 /*return*/];
+            }
+        });
+    }); });
+});
