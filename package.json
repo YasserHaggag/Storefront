@@ -41,7 +41,7 @@
   },
   "scripts": {
     "jasmine": "jasmine",
-    "test": "db-migrate --env test reset && npm run migrate:up:test && npx tsc && jasmine",
+    "test": "db-migrate --env test reset && npm run migrate:up:test db-migrate db:drop test && npx tsc && jasmine",
     "migrate:up": "db-migrate up",
     "migrate:up:test": "db-migrate --env test up",
     "migrate:done": "db-migrate down",

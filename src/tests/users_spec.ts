@@ -3,8 +3,7 @@ import app from '../server'
 import supertest from 'supertest'
 const request=supertest(app)
 const users_model=new users()
-let user: string;
-let accessToken: string;
+
 describe('Test User Model',()=>
 {
   
