@@ -22,9 +22,9 @@ describe('Test User Model',()=>
 
     })
  
-    it('create new user',async ()=>
+    it('create new user',async()=>
     {
-        const response=await request.post('/api/user').send({
+        const response= await request.post('/api/user').send({
     
             "name":"Ali",
             "telephone":1005464562,
