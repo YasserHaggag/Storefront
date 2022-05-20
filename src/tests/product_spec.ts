@@ -4,20 +4,34 @@ import supertest from 'supertest'
 const request=supertest(app)
 const products_model=new products()
 let accessToken: string
+let user: string
 const prod={       "pname":"Pepsi",
 "price":1,
 "pdescription":"streeeeet 2222"}
 describe('Test User Model',()=>
 {
     beforeAll(async () => {
-        const res = (await request.post("/api/user/authenticate").send({
-            
+        const response=await request.post('/api/user').send({
+    
+            "name":"Ali",
+            "telephone":1005464562,
+            "address":"streeeeet 2222",
             "email":"yasser@gmail.test",
             "password":"Yasser@Admin123"
-        }));
-      console.log(res.body.data.token)
-         accessToken = res.body.data.token;
-      });
+        }).then(async ()=>
+        {
+            const res = (await request.post("/api/user/authenticate").send({
+            
+                "email":"yasser@gmail.test",
+                "password":"Yasser@Admin123"
+            }));
+          console.log(res.body.data.token)
+          console.log(res.body.data.user.id,'User ID ID ID ID ID ID ')
+           user= res.body.data.user.id
+            accessToken = res.body.data.token;
+          });
+
+        })
     it('should have index method',()=>
     {
         expect(products_model.getall).toBeDefined();

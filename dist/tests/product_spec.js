@@ -45,22 +45,41 @@ var supertest_1 = __importDefault(require("supertest"));
 var request = (0, supertest_1.default)(server_1.default);
 var products_model = new products_model_1.products();
 var accessToken;
+var user;
 var prod = { "pname": "Pepsi",
     "price": 1,
     "pdescription": "streeeeet 2222" };
 describe('Test User Model', function () {
     beforeAll(function () { return __awaiter(void 0, void 0, void 0, function () {
-        var res;
+        var response;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, request.post("/api/user/authenticate").send({
+                case 0: return [4 /*yield*/, request.post('/api/user').send({
+                        "name": "Ali",
+                        "telephone": 1005464562,
+                        "address": "streeeeet 2222",
                         "email": "yasser@gmail.test",
                         "password": "Yasser@Admin123"
-                    })];
+                    }).then(function () { return __awaiter(void 0, void 0, void 0, function () {
+                        var res;
+                        return __generator(this, function (_a) {
+                            switch (_a.label) {
+                                case 0: return [4 /*yield*/, request.post("/api/user/authenticate").send({
+                                        "email": "yasser@gmail.test",
+                                        "password": "Yasser@Admin123"
+                                    })];
+                                case 1:
+                                    res = (_a.sent());
+                                    console.log(res.body.data.token);
+                                    console.log(res.body.data.user.id, 'User ID ID ID ID ID ID ');
+                                    user = res.body.data.user.id;
+                                    accessToken = res.body.data.token;
+                                    return [2 /*return*/];
+                            }
+                        });
+                    }); })];
                 case 1:
-                    res = (_a.sent());
-                    console.log(res.body.data.token);
-                    accessToken = res.body.data.token;
+                    response = _a.sent();
                     return [2 /*return*/];
             }
         });

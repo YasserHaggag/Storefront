@@ -4,18 +4,31 @@ import supertest from 'supertest'
 const request=supertest(app)
 const orders_model=new orders()
 let accessToken:string 
+let user: string
 describe('Test Order Endpoints and Models',()=>
 {
     beforeAll(async () => {
-        const res = (await request.post("/api/user/authenticate").send({
-            
+        const response=await request.post('/api/user').send({
+    
+            "name":"Ali",
+            "telephone":1005464562,
+            "address":"streeeeet 2222",
             "email":"yasser@gmail.test",
             "password":"Yasser@Admin123"
-        }));
-      console.log(res.body.data.token)
-        
-        accessToken = res.body.data.token;
-      });
+        }).then(async ()=>
+        {
+            const res = (await request.post("/api/user/authenticate").send({
+            
+                "email":"yasser@gmail.test",
+                "password":"Yasser@Admin123"
+            }));
+          console.log(res.body.data.token)
+          console.log(res.body.data.user.id,'User ID ID ID ID ID ID ')
+           user= res.body.data.user.id
+            accessToken = res.body.data.token;
+          });
+
+        })
     it('should have index method',()=>
     {
         expect(orders_model.getall).toBeDefined();
@@ -39,7 +52,7 @@ describe('Test Order Endpoints and Models',()=>
         const response=await request.post('/api/order').set("Authorization", "Bearer " + accessToken).send({
     
             
-                "user_id":7,
+                "user_id":user,
                 "comments":"User comments in that area"
             
         });

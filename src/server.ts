@@ -19,7 +19,7 @@ app.listen(port,()=>
 {
     console.log(`Server started at localhost: ${port}`)
 })
-app.use(morgan('common'))
+//app.use(morgan('common'))
 
 app.use(errormid)
 export default app
