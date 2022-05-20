@@ -45,7 +45,7 @@ var supertest_1 = __importDefault(require("supertest"));
 var request = (0, supertest_1.default)(server_1.default);
 var orders_model = new orders_model_1.orders();
 var accessToken;
-describe('Test User Model', function () {
+describe('Test Order Endpoints and Models', function () {
     beforeAll(function () { return __awaiter(void 0, void 0, void 0, function () {
         var res;
         return __generator(this, function (_a) {
@@ -72,15 +72,15 @@ describe('Test User Model', function () {
                 case 0: return [4 /*yield*/, orders_model.getall()];
                 case 1:
                     result = _a.sent();
-                    expect(result).toEqual([]);
+                    expect(result).not.toBeNull();
                     return [2 /*return*/];
             }
         });
     }); });
-    it('index method should return a list of orders', function () {
+    it('Create new Order Defined', function () {
         expect(orders_model.create).toBeDefined();
     });
-    it('create new order', function () { return __awaiter(void 0, void 0, void 0, function () {
+    it('create new order API ', function () { return __awaiter(void 0, void 0, void 0, function () {
         var response;
         return __generator(this, function (_a) {
             switch (_a.label) {

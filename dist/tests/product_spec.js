@@ -45,6 +45,9 @@ var supertest_1 = __importDefault(require("supertest"));
 var request = (0, supertest_1.default)(server_1.default);
 var products_model = new products_model_1.products();
 var accessToken;
+var prod = { "pname": "Pepsi",
+    "price": 1,
+    "pdescription": "streeeeet 2222" };
 describe('Test User Model', function () {
     beforeAll(function () { return __awaiter(void 0, void 0, void 0, function () {
         var res;
@@ -77,7 +80,7 @@ describe('Test User Model', function () {
             }
         });
     }); });
-    it('index method should return a list of orders', function () {
+    it('Create product implemented', function () {
         expect(products_model.create).toBeDefined();
     });
     it('create new Product', function () { return __awaiter(void 0, void 0, void 0, function () {
@@ -92,6 +95,19 @@ describe('Test User Model', function () {
                 case 1:
                     response = _a.sent();
                     expect(response.body.status).toEqual('success');
+                    return [2 /*return*/];
+            }
+        });
+    }); });
+    it('create new Product through database', function () { return __awaiter(void 0, void 0, void 0, function () {
+        var response;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, products_model.create(prod)];
+                case 1:
+                    response = _a.sent();
+                    console.log(response, 'This is the DB');
+                    expect(response.pname).toEqual(prod.pname);
                     return [2 /*return*/];
             }
         });

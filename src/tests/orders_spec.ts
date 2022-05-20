@@ -4,7 +4,7 @@ import supertest from 'supertest'
 const request=supertest(app)
 const orders_model=new orders()
 let accessToken:string 
-describe('Test User Model',()=>
+describe('Test Order Endpoints and Models',()=>
 {
     beforeAll(async () => {
         const res = (await request.post("/api/user/authenticate").send({
@@ -25,16 +25,16 @@ describe('Test User Model',()=>
     it('index method should return a list of orders',async ()=>
     {
         const result = await orders_model.getall();
-        expect(result).toEqual([])
+        expect(result).not.toBeNull()
 
     })
-    it('index method should return a list of orders', ()=>
+    it('Create new Order Defined', ()=>
     {
         
         expect(orders_model.create).toBeDefined()
 
     })
-    it('create new order',async ()=>
+    it('create new order API ',async ()=>
     {
         const response=await request.post('/api/order').set("Authorization", "Bearer " + accessToken).send({
     

@@ -5,7 +5,7 @@ The company stakeholders want to create an online storefront to showcase their g
 These are the notes from a meeting with the frontend developer that describe what endpoints the API needs to supply, as well as data shapes the frontend and backend have agreed meet the requirements of the application.
 
 ## API Endpoints
-
+- Project root : [local host link](http://localhost:3000/api)
 #### Products
 
 - Index: '/product' [GET] 
@@ -49,7 +49,6 @@ These are the notes from a meeting with the frontend developer that describe wha
 - telephone
 - address
 - email
-- payment_method
 - password
 
 #### Orders
@@ -80,7 +79,6 @@ These are the notes from a meeting with the frontend developer that describe wha
 - telephone: VARCHAR
 - address: VARCHAR
 - email: VARCHAR
-- payment_method: Int
 - password: VARCHAR
 
 #### Orders

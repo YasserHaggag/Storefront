@@ -4,6 +4,9 @@ import supertest from 'supertest'
 const request=supertest(app)
 const products_model=new products()
 let accessToken: string
+const prod={       "pname":"Pepsi",
+"price":1,
+"pdescription":"streeeeet 2222"}
 describe('Test User Model',()=>
 {
     beforeAll(async () => {
@@ -27,7 +30,7 @@ describe('Test User Model',()=>
         expect(result.length).toBeGreaterThan(1)
 
     })
-    it('index method should return a list of orders', ()=>
+    it('Create product implemented', ()=>
     {
         
         expect(products_model.create).toBeDefined()
@@ -43,5 +46,16 @@ describe('Test User Model',()=>
         expect(response.body.status).toEqual('success')
         
     })
+
+    it('create new Product through database',async ()=>
+    {
+        const response=await products_model.create(prod)
+    console.log(response,'This is the DB')
+        
+        expect(response.pname).toEqual(prod.pname)
+        
+    })
+
+    
 
 })
