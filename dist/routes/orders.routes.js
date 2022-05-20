@@ -1,13 +1,17 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 var express_1 = require("express");
 var orders_controllers_1 = require("../controllers/orders.controllers");
+var authentication_middleware_1 = __importDefault(require("../middlewares/authentication.middleware"));
 var orderRoutes = (0, express_1.Router)();
-orderRoutes.get('/', orders_controllers_1.allOrders);
-orderRoutes.get('/:id', orders_controllers_1.getOrder);
-orderRoutes.post('/', orders_controllers_1.create);
-orderRoutes.delete('/:id', orders_controllers_1.deleteOrder);
-orderRoutes.put('/', orders_controllers_1.updateOrder);
+orderRoutes.get('/', authentication_middleware_1.default, orders_controllers_1.allOrders);
+orderRoutes.get('/:id', authentication_middleware_1.default, orders_controllers_1.getOrder);
+orderRoutes.post('/', authentication_middleware_1.default, orders_controllers_1.create);
+orderRoutes.delete('/:id', authentication_middleware_1.default, orders_controllers_1.deleteOrder);
+orderRoutes.put('/', authentication_middleware_1.default, orders_controllers_1.updateOrder);
 /* userRoutes.post('/', (req: Request, res: Response) => {
     const article: users = {
       name: req.body.name,

@@ -58,7 +58,7 @@ var users = /** @class */ (function () {
                     case 0:
                         _a.trys.push([0, 4, , 5]);
                         conn = database_1.default.connect();
-                        sql = 'select id,name,telephone,address,email,payment_method_id from users';
+                        sql = 'select id,name,telephone,address,email from users';
                         return [4 /*yield*/, conn];
                     case 1:
                         result = (_a.sent()).query(sql);
@@ -86,10 +86,10 @@ var users = /** @class */ (function () {
                     case 0:
                         _a.trys.push([0, 4, , 5]);
                         conn = database_1.default.connect();
-                        sql = "INSERT INTO users (name,telephone,address,email,payment_method_id,password) Values($1,$2,$3,$4,$5,$6) Returning\n             id,name,telephone,address,email,payment_method_id";
+                        sql = "INSERT INTO users (name,telephone,address,email,password) Values($1,$2,$3,$4,$5) Returning\n             id,name,telephone,address,email";
                         return [4 /*yield*/, conn];
                     case 1:
-                        result = (_a.sent()).query(sql, [u.name, u.telephone, u.address, u.email, u.payment_method_id, hash(u.password)]);
+                        result = (_a.sent()).query(sql, [u.name, u.telephone, u.address, u.email, hash(u.password)]);
                         return [4 /*yield*/, conn];
                     case 2:
                         //close the connection
@@ -114,7 +114,7 @@ var users = /** @class */ (function () {
                     case 0:
                         _a.trys.push([0, 4, , 5]);
                         conn = database_1.default.connect();
-                        sql = "select id,name,telephone,address,email,payment_method_id from users where id=($1)";
+                        sql = "select id,name,telephone,address,email from users where id=($1)";
                         return [4 /*yield*/, conn];
                     case 1:
                         result = (_a.sent()).query(sql, [id]);
@@ -142,10 +142,10 @@ var users = /** @class */ (function () {
                     case 0:
                         _a.trys.push([0, 4, , 5]);
                         conn = database_1.default.connect();
-                        sql = "update users set name=$2,telephone=$3,address=$4,email=$5,payment_method_id=$6,password=$7 where id=($1) Returning\n             id,name,telephone,address,email,payment_method_id ";
+                        sql = "update users set name=$2,telephone=$3,address=$4,email=$5,password=$6 where id=($1) Returning\n             id,name,telephone,address,email ";
                         return [4 /*yield*/, conn];
                     case 1:
-                        result = (_a.sent()).query(sql, [u.id, u.name, u.telephone, u.address, u.email, u.payment_method_id, hash(u.password)]);
+                        result = (_a.sent()).query(sql, [u.id, u.name, u.telephone, u.address, u.email, hash(u.password)]);
                         return [4 /*yield*/, conn];
                     case 2:
                         //close the connection
@@ -212,7 +212,7 @@ var users = /** @class */ (function () {
                         isPasswordValid = bcrypt_1.default.compareSync("".concat(password).concat(config_1.default.pepper), hash_1);
                         console.log(isPasswordValid);
                         if (!isPasswordValid) return [3 /*break*/, 4];
-                        return [4 /*yield*/, connection.query('select id,name,telephone,address,email,payment_method_id from users where email=($1)', [email])];
+                        return [4 /*yield*/, connection.query('select id,name,telephone,address,email from users where email=($1)', [email])];
                     case 3:
                         userInfo = _a.sent();
                         console.log(userInfo.rows[0]);

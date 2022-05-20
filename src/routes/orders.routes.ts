@@ -2,16 +2,17 @@
 import { Router } from "express";
 import { allOrders, getOrder,create, deleteOrder,updateOrder} from "../controllers/orders.controllers";
 import { authenticate } from "../controllers/user.controllers";
+import validateTokenMiddleware from "../middlewares/authentication.middleware";
 
 
 
 const orderRoutes=Router();
 
-orderRoutes.get('/', allOrders)
-orderRoutes.get('/:id', getOrder)
-orderRoutes.post('/', create)
-orderRoutes.delete('/:id',deleteOrder)
-orderRoutes.put('/',updateOrder)
+orderRoutes.get('/',validateTokenMiddleware, allOrders)
+orderRoutes.get('/:id',validateTokenMiddleware, getOrder)
+orderRoutes.post('/',validateTokenMiddleware, create)
+orderRoutes.delete('/:id',validateTokenMiddleware,deleteOrder)
+orderRoutes.put('/',validateTokenMiddleware,updateOrder)
 
 /* userRoutes.post('/', (req: Request, res: Response) => {
     const article: users = {

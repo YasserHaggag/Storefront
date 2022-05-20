@@ -1,13 +1,17 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 var express_1 = require("express");
 var product_controllers_1 = require("../controllers/product.controllers");
+var authentication_middleware_1 = __importDefault(require("../middlewares/authentication.middleware"));
 var productRoutes = (0, express_1.Router)();
-productRoutes.get('/', product_controllers_1.allProducts);
-productRoutes.get('/:id', product_controllers_1.getProduct);
-productRoutes.post('/', product_controllers_1.create);
-productRoutes.delete('/:id', product_controllers_1.deleteProduct);
-productRoutes.put('/', product_controllers_1.updateProduct);
+productRoutes.get('/', authentication_middleware_1.default, product_controllers_1.allProducts);
+productRoutes.get('/:id', authentication_middleware_1.default, product_controllers_1.getProduct);
+productRoutes.post('/', authentication_middleware_1.default, product_controllers_1.create);
+productRoutes.delete('/:id', authentication_middleware_1.default, product_controllers_1.deleteProduct);
+productRoutes.put('/', authentication_middleware_1.default, product_controllers_1.updateProduct);
 /* userRoutes.post('/', (req: Request, res: Response) => {
     const article: users = {
       name: req.body.name,

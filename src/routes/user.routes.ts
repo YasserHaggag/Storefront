@@ -5,11 +5,11 @@ import validateTokenMiddleware from "../middlewares/authentication.middleware";
 const userRoutes=Router();
 
 
-userRoutes.route('/').get(allusers)
-userRoutes.get('/:id', getuser)
+userRoutes.route('/').get(validateTokenMiddleware,allusers)
+userRoutes.get('/:id',validateTokenMiddleware, getuser)
 userRoutes.post('/', create)
-userRoutes.delete('/:id',deleteUser)
-userRoutes.put('/',updateUser)
+userRoutes.delete('/:id',validateTokenMiddleware,deleteUser)
+userRoutes.put('/',validateTokenMiddleware,updateUser)
 userRoutes.post('/authenticate',authenticate)
 
 

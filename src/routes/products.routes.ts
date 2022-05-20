@@ -6,11 +6,11 @@ import validateTokenMiddleware from "../middlewares/authentication.middleware";
 
 const productRoutes=Router();
 
-productRoutes.get('/', allProducts)
-productRoutes.get('/:id', getProduct)
-productRoutes.post('/', create)
-productRoutes.delete('/:id',deleteProduct)
-productRoutes.put('/',updateProduct)
+productRoutes.get('/',validateTokenMiddleware, allProducts)
+productRoutes.get('/:id',validateTokenMiddleware, getProduct)
+productRoutes.post('/',validateTokenMiddleware, create)
+productRoutes.delete('/:id',validateTokenMiddleware,deleteProduct)
+productRoutes.put('/',validateTokenMiddleware,updateProduct)
 
 /* userRoutes.post('/', (req: Request, res: Response) => {
     const article: users = {
